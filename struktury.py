@@ -3,7 +3,7 @@
 
 class _Node:
     '''A (hopefully) universal node. Key, data(None)'''
-    def __init__(self, data = None, key = None):
+    def __init__(self, data=None, key=None):
         self.key = key
         self.data = data
         self.left = None
@@ -35,12 +35,12 @@ class _Node:
 
 # In[117]:
 
-class Stack():
+class Stack:
     '''Linked structure. push(key,data), pop, top, isEmpty.'''
     def __init__(self):
         self.peak = None
         
-    def push(self,key,data=None):
+    def push(self, key, data=None):
         new = _Node(key,data)
         if self.peak is not None:
             new.parent = self.peak
@@ -107,7 +107,7 @@ class DoubleLinkedList:
             yield left
             left = left.right
         
-    def _insertRight(self, key, data = None):
+    def _insertRight(self, key, data=None):
         self.length += 1
         if self.right is None:
             self.right = self.left = _Node(key,data)
@@ -117,7 +117,7 @@ class DoubleLinkedList:
             self.right.right = new
             self.right = self.right.right
 
-    def _insertLeft(self, key, data = None):
+    def _insertLeft(self, key, data=None):
         self.length += 1
         if self.left is None:
             self.left = self.right = _Node(key,data)
@@ -143,18 +143,18 @@ class DoubleLinkedList:
             return
         self.left.left = None
         
-    def insert(self,key,data=None):
+    def insert(self, key, data=None):
         if self.right is None:
             self.left = self.right = _Node(key,data)
             self.left.right = self.right
             self.right.left = self.left
             self.length += 1
             return
-        if key>self.right.key:
-            self._insertRight(key,data)
+        if key > self.right.key:
+            self._insertRight(key, data)
             return
         elif key<self.left.key:
-            self._insertLeft(key,data)
+            self._insertLeft(key, data)
             return
         left = self.left #najmniejsza wartość
         leftright = self.left.right #kolejna po najmniejszej
@@ -247,7 +247,7 @@ class CycleQueue:
         return self.items[self.head]
 
 class PQ:
-    def __init__(self,mode='max'):
+    def __init__(self, mode='max'):
         self.heap = []
         self.mode = mode
         
@@ -270,7 +270,7 @@ class PQ:
         
     def _toTop(self,n): #n to miejsce, które porównujemy z rodzicem
         parent = self._parent(n)
-        while n>0 and self._cmpr(n,parent):
+        while n>0 and self._cmpr(n, parent):
             self.heap[parent],self.heap[n] = self.heap[n],self.heap[parent]
             n = parent
             parent = self._parent(parent)
@@ -279,9 +279,9 @@ class PQ:
         left = self._leftchild(n)
         right = self._rightchild(n)
         target = n
-        if left <= len(self.heap)-1 and self._cmpr(left,n):
+        if left <= len(self.heap)-1 and self._cmpr(left, n):
             target = left
-        if right <= len(self.heap)-1 and self._cmpr(right,target):
+        if right <= len(self.heap)-1 and self._cmpr(right, target):
             target = right
         if target != n:
             self.heap[n],self.heap[target] = self.heap[target],self.heap[n]
@@ -290,18 +290,18 @@ class PQ:
     def isEmpty(self):
         return self.heap == []
             
-    def _parent(self,x):
+    def _parent(self, x):
         if x%2 == 0:
             return x//2-1
         return x//2
     
-    def _leftchild(self,x):
+    def _leftchild(self, x):
         return x*2+1
     
-    def _rightchild(self,x):
+    def _rightchild(self, x):
         return x*2+2
     
-    def _cmpr(self,a,b):
+    def _cmpr(self, a, b):
         if self.mode == 'max':
             return self.heap[a]>self.heap[b]
         elif self.mode == 'min':
@@ -315,17 +315,17 @@ def HeapSort(T):
     _build(T)
     n = len(T)-1
     while n>=0:
-        T[0],T[n] = T[n],T[0]
-        _toBottom(T,n)
+        T[0], T[n] = T[n], T[0]
+        _toBottom(T, n)
         n -= 1
     return T
 
 def _build(T):
-    for x in range(_parent(len(T)-1),-1,-1): #od ostatniego rodzica do początku
+    for x in range(_parent(len(T)-1), -1, -1): #od ostatniego rodzica do początku
         _toBottom(T,x)
     return T
 
-def _toBottom(T,n):
+def _toBottom(T, n):
     left = _leftchild(n)
     right = _rightchild(n)
     smallest = n
@@ -335,7 +335,7 @@ def _toBottom(T,n):
         smallest = right
     if smallest != n:
         T[n],T[smallest] = T[smallest],T[n]
-        _toBottom(T,smallest)
+        _toBottom(T, smallest)
         
 def _leftchild(x):
     return x*2+1
@@ -376,7 +376,7 @@ class BinarySearchTree:
         else:
             y.right = z
 
-    def _preorder(self,root):
+    def _preorder(self, root):
         if root is not None:
             print (root)
             self._preorder(root.left)
@@ -385,7 +385,7 @@ class BinarySearchTree:
     def preorder(self):
         self._preorder(self.root)
 
-    def _inorder(self,root):
+    def _inorder(self, root):
         if root is not None:
             self._inorder(root.left)
             print (root)
@@ -394,7 +394,7 @@ class BinarySearchTree:
     def inorder(self):
         self._inorder(self.root)
 
-    def _postorder(self,root):
+    def _postorder(self, root):
         if root is not None:
             self._postorder(root.left)
             self._postorder(root.right)
@@ -404,43 +404,43 @@ class BinarySearchTree:
         self._postorder(self.root)
         
         
-    def _insert(self,node,tree):
+    def _insert(self, node, tree):
         if tree > node:
             if tree.left is not None:
-                self._insert(node,tree.left)
+                self._insert(node, tree.left)
             else:
                 node.parent = tree
                 tree.left = node
                 return
         if tree <= node:
             if tree.right is not None:
-                self._insert(node,tree.right)
+                self._insert(node, tree.right)
             else:
                 node.parent = tree
                 tree.right = node
                 return
             
-    def insert(self,key,data=None):
+    def insert(self, key, data=None):
         node = _Node(key,data)
         if self.root is None:
             self.root = node
             return
-        self._insert(node,self.root)
+        self._insert(node, self.root)
     
-    def _min(self,node): #wskazuje komórkę z najmniejszą wartością w podanym drzewie (by podało wartość, należy wpisać self._min.key)
+    def _min(self,node):
         while node.left is not None:
             node = node.left
         return node
     
-    def delete(self,key):
+    def delete(self, key):
         self._delete(self.root,key)
         
-    def _delete(self,root,key):
+    def _delete(self, root, key):
         if key < root.key:
-            root.left = self._delete(root.left,key)
+            root.left = self._delete(root.left, key)
             return root
         elif key > root.key:
-            root.right = self._delete(root.right,key)
+            root.right = self._delete(root.right, key)
             return root
         else:
             if root.left is None and root.right is None:
@@ -454,10 +454,10 @@ class BinarySearchTree:
             else:
                 successor = self._min(root.right)
                 root.key = successor.key
-                root.right = self._delete(root.right,successor.key)
+                root.right = self._delete(root.right, successor.key)
                 return root
             
-    def _search(self,key): #zwraca node o podanej wartości
+    def _search(self, key):
         x = self.root
         while x is not None:
             if key > x:
@@ -468,7 +468,7 @@ class BinarySearchTree:
                 return x
         return x
     
-    def search(self,key):
+    def search(self, key):
         return self._search(key) is not None
         
     def nodes(self):
@@ -492,7 +492,7 @@ class BinarySearchTree:
 
 class BinarySearchTreeNoNode:
     '''Binary Search Tree without additional Node class. insert_iter, insert, inorder, delete.'''
-    def __init__(self,key=None,parent=None,data=None):
+    def __init__(self, key=None, parent=None, data=None):
         self.key = key
         self.left = None
         self.right = None
@@ -501,9 +501,9 @@ class BinarySearchTreeNoNode:
 
     def insert_iter(self, key, data=None):
         if self.key is None:
-            self.key = klucz
+            self.key = key
         else:
-            z = BinarySearchTreeNoNode(key,data)
+            z = BinarySearchTreeNoNode(key, data)
             y = None
             x = self
             while (x is not None):
@@ -525,31 +525,31 @@ class BinarySearchTreeNoNode:
             if self.right is not None:
                 self.right.inorder()
                 
-    def insert(self,key,data):
+    def insert(self, key, data):
         if self.key is None:
             self.key = key
             return
         if self.key > key:
             if self.left is not None:
-                self.left.insert(key,data)
+                self.left.insert(key, data)
             else:
-                self.left = BinarySearchTreeNoNode(key,self,data)
+                self.left = BinarySearchTreeNoNode(key, self, data)
         if self.key <= key:
             if self.right is not None:
-                self.right.insert(key,self,data)
+                self.right.insert(key, self, data)
             else:
-                self.right = BinarySearchTreeNoNode(key,data)
+                self.right = BinarySearchTreeNoNode(key, data)
 
     def _min(self):
         if self.left is not None:
             return self.left._min()
         return self
     
-    def delete(self,key):
+    def delete(self, key):
         self = self._delete(key)
     
     
-    def _delete(self,key):
+    def _delete(self, key):
         if key < self.key:
             self.left = self.left._delete(key)
             return self
@@ -582,8 +582,8 @@ class RBT:
     def isEmpty(self):
         return self.root is self.nill
     
-    def insert(self,key,data=None):
-        new = _Node(key = key, data = data)
+    def insert(self, key, data=None):
+        new = _Node(key=key, data=data)
         new.left = self.nill
         new.right = self.nill
         if self.root is self.nill:
@@ -591,12 +591,12 @@ class RBT:
             self.root.parent = self.nill
             self.root.color = 'black'
         else:
-            self._insert(new,self.root)
+            self._insert(new, self.root)
     
-    def _insert(self,node,tree):
+    def _insert(self, node, tree):
         if node >= tree:
             if tree.right is not self.nill:
-                self._insert(node,tree.right)
+                self._insert(node, tree.right)
             else:
                 node.parent = tree
                 tree.right = node
@@ -604,14 +604,14 @@ class RBT:
                 return
         elif node < tree:
             if tree.left is not self.nill:
-                self._insert(node,tree.left)
+                self._insert(node, tree.left)
             else:
                 node.parent = tree
                 tree.left = node
                 self.fixup(tree.left)
                 return
             
-    def rotate_left(self,tree):
+    def rotate_left(self, tree):
         #print(tree.data)
         y = tree.right
         tree.right = y.left
@@ -627,7 +627,7 @@ class RBT:
         y.left = tree
         tree.parent = y
         
-    def rotate_right(self,tree):
+    def rotate_right(self, tree):
         #print(tree.data)
         y = tree.left
         tree.left = y.right
@@ -643,7 +643,7 @@ class RBT:
         y.right = tree
         tree.parent = y
                 
-    def fixup(self,tree):
+    def fixup(self, tree):
         while tree.parent.color == 'red':
             if tree.parent == tree.parent.parent.left:
                 uncle = tree.parent.parent.right #ustalenie wujka
@@ -675,7 +675,7 @@ class RBT:
                     self.rotate_left(tree.parent.parent)
         self.root.color = 'black'
         
-    def transplant(self,u,v):
+    def transplant(self, u, v):
         if u.parent == self.nill:
             self.root = v
         elif u == u.parent.left:
@@ -684,7 +684,7 @@ class RBT:
             u.parent.right = v
         v.parent = u.parent
         
-    def _search(self,key): #zwraca node o podanej wartości
+    def _search(self, key): #zwraca node o podanej wartości
         x = self.root
         while x is not self.nill:
             if key > x:
@@ -695,20 +695,20 @@ class RBT:
                 return x
         return x
     
-    def search(self,key):
+    def search(self, key):
         return self._search(key) is not self.nill
         
-    def _min(self,node): #minimum z danego drzewa
+    def _min(self, node): #minimum z danego drzewa
         while node.left is not self.nill:
             node = node.left
         return node
     
-    def _max(self,node):
+    def _max(self, node):
         while node.right is not self.nill:
             node = node.right
         return node
 
-    def delete(self,key):
+    def delete(self, key):
         z = self._search(key)
         if z is self.nill:
             raise Exception('No such node found.')
@@ -716,10 +716,10 @@ class RBT:
         oricol = y.color
         if z.left == self.nill:
             x = z.right
-            self.transplant(z,z.right)
+            self.transplant(z, z.right)
         elif z.right == self.nill:
             x = z.left
-            self.transplant(z,z.left)
+            self.transplant(z, z.left)
         else:
             y = self._min(z.right)
             oricol = y.color
@@ -727,17 +727,17 @@ class RBT:
             if y.parent == z:
                 x.parent = y
             else:
-                self.transplant(y,y.right)
+                self.transplant(y, y.right)
                 y.right = z.right
                 y.right.parent = y
-            self.transplant(z,y)
+            self.transplant(z, y)
             y.left = z.left
             y.left.parent = y
             y.color = z.color
         if oricol == 'black':
             self.del_fixup(x)
             
-    def del_fixup(self,x):
+    def del_fixup(self, x):
         while x != self.root and x.color == 'black':
             if x == x.parent.left:
                 w = x.parent.right
@@ -746,7 +746,7 @@ class RBT:
                     x.parent.color = 'red'
                     self.rotate_left(x.parent)
                     w = x.parent.right
-                if w.left.color =='black' and w.right.color == 'black':
+                if w.left.color == 'black' and w.right.color == 'black':
                     w.color = 'red'
                     x = x.parent
                 else:
@@ -786,20 +786,20 @@ class RBT:
     def inorder(self):
         return self._inorder(self.root)
     
-    def _inorder(self,root):
+    def _inorder(self, root):
         if root is not self.nill:
             if root.left is not self.nill:
                 self._inorder(root.left)
-            print (root)
+            print(root)
             if root.right is not self.nill:
                 self._inorder(root.right)
                 
     def preorder(self):
         return self._preorder(self.root)
     
-    def _preorder(self,root):
+    def _preorder(self, root):
         if root is not self.nill:
-            print (root)
+            print(root)
             if root.left is not self.nill:
                 self._preorder(root.left)
             if root.right is not self.nill:
@@ -808,18 +808,18 @@ class RBT:
     def postorder(self):
         return self._postorder(self.root)
     
-    def _postorder(self,root):
+    def _postorder(self, root):
         if root is not self.nill:
             if root.left is not self.nill:
                 self._postorder(root.left)
             if root.right is not self.nill:
                 self._postorder(root.right)
-            print (root)
+            print(root)
             
     def leaves(self):
         self._leaves(self.root)
     
-    def _leaves(self,root):
+    def _leaves(self, root):
         if root.right is not self.nill:
             self._leaves(root.right)
         if root.left is not self.nill:
@@ -846,13 +846,13 @@ class RBT:
         count += 1
         return count
     
-    def data(self,key):
+    def data(self, key):
         return self._search(key).data
     
     def inorder_gen(self):
         return self._inorder_gen(self.root)
     
-    def _inorder_gen(self,node):
+    def _inorder_gen(self, node):
         if node is not self.nill:
             if node.left is not self.nill:
                 yield from self._inorder_gen(node.left)
@@ -861,7 +861,7 @@ class RBT:
                 yield from self._inorder_gen(node.right)
 
 class HuffmanTree:
-    def __init__(self,key,data=None,path = ''):
+    def __init__(self, key, data=None, path=''):
         self.root = None
         self.key = key
         self.data = data
@@ -869,8 +869,8 @@ class HuffmanTree:
         self.right = None
         self.path = path
     
-    def __add__(self,other):
-        new = HuffmanTree(self.key + other.key)
+    def __add__(self, other):
+        new = HuffmanTree(self.key+other.key)
         new.left = self
         new.left.path += '0'
         new.right = other
@@ -885,7 +885,7 @@ class HuffmanTree:
             if self.right is not None:
                 self.right.inorder()
                 
-    def paths(self,path=''):
+    def paths(self, path=''):
         if self.key is not None:
             if self.left is not None:
                 lpath = path + '0'
@@ -894,7 +894,7 @@ class HuffmanTree:
                 rpath = path + '1'
                 self.right.paths(rpath)
             if self.right is None and self.left is None:
-                print ('{}: ID:{}, Vol:{}, Code:{}'.format(chr(self.data),self.data,self.key,path))
+                print(f'{chr(self.data)}: ID:{self.data}, Vol:{self.key}, Code:{path}')
     
     def __lt__(self, other):
         return self.key < other
